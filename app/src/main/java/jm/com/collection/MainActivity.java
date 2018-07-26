@@ -12,17 +12,10 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import jm.com.collection.ffmpeg.NdkProjectActivity;
 import jm.com.collection.net.LdNetTestActivity;
+import jm.com.collection.socket.SocketActivity;
 import jm.com.collection.view.CustomViewActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-
-    @InjectView(R.id.btn_ld_net)
-    Button btnLdNet;
-    @InjectView(R.id.sample_text)
-    TextView sampleText;
-    @InjectView(R.id.btn_custom_view)
-    Button btnCustomView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project})
+    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ld_net:
@@ -43,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_ndk_project:
                 startActivity(new Intent(MainActivity.this, NdkProjectActivity.class));
+                break;
+            case R.id.btn_socket_knowledge:
+                startActivity(new Intent(MainActivity.this, SocketActivity.class));
                 break;
         }
     }
