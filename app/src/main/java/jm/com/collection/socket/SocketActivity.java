@@ -35,12 +35,10 @@ public class SocketActivity extends AppCompatActivity {
     public void OnClick(View view){
         switch (view.getId()){
             case R.id.btn_connection_one:
-                if (client==null){
-                    try {
-                        client = new ExampleClient( new URI( SocketConfig.SOCKET_URL ));
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    client = new ExampleClient( new URI( SocketConfig.SOCKET_URL ));
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
                 }
                 client.connect();
                 break;

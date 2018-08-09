@@ -51,24 +51,24 @@ public class ExampleClient extends WebSocketClient {
 
 	@Override
 	public void onOpen( ServerHandshake handshakedata ) {
-		Log.i(TAG,"opened connection" );
+		Log.i(TAG,"client opened connection" );
 	}
 
 	@Override
 	public void onMessage( String message ) {
-		System.out.println( "received: " + message );
+		Log.i(TAG, "client received: " + message );
 	}
 
 	@Override
 	public void onClose( int code, String reason, boolean remote ) {
-		Log.i(TAG,"Connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );
+		Log.i(TAG,"client connection closed by " + ( remote ? "remote peer" : "us" ) + " Code: " + code + " Reason: " + reason );
 	}
 
 	@Override
 	public void onError( Exception ex ) {
 		ex.printStackTrace();
 		// if the error is fatal then onClose will be called additionally
-		Log.i(TAG,"error"+ex.toString());
+		Log.i(TAG," client error"+ex.toString());
 	}
 
 }
