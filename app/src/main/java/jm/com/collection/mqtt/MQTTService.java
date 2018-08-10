@@ -29,7 +29,7 @@ public class MQTTService extends Service {
     private MqttConnectOptions conOpt;
 
     //    private String host = "tcp://10.0.2.2:61613";
-    private String host = "tcp://172.18.11.10:61613";
+    private String host = "mqtt://121.43.73.131:13613";
     private String userName = "admin";
     private String passWord = "password";
     private static String myTopic = "topic";
