@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:allowBackup="true"
@@ -42,6 +44,10 @@
         <activity android:name=".ffmpeg.VideoDecodeActivity"/>
 
         <activity android:name=".socket.SocketActivity"/>
+
+         <activity android:name=".mqtt.MQTTActivity"/>
+         <service android:name=".mqtt.MQTTService"/>
+         <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 
 </manifest>

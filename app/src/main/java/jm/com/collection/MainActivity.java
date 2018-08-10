@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import jm.com.collection.ffmpeg.NdkProjectActivity;
+import jm.com.collection.mqtt.MQTTActivity;
 import jm.com.collection.net.LdNetTestActivity;
 import jm.com.collection.socket.SocketActivity;
 import jm.com.collection.view.CustomViewActivity;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge})
+    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge,R.id.btn_mqtt_knowledge})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ld_net:
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_socket_knowledge:
                 startActivity(new Intent(MainActivity.this, SocketActivity.class));
+                break;
+            case R.id.btn_mqtt_knowledge:
+                startActivity(new Intent(MainActivity.this, MQTTActivity.class));
                 break;
         }
     }
