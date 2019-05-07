@@ -511,7 +511,7 @@ union unaligned_16 { uint16_t l; } __attribute__((packed)) av_alias;
 #endif
 
 /*
- * The AV_[RW]NA macros access naturally aligned data
+ * The AV_[RW]NA macros access naturally aligned LoginData
  * in a type-safe way.
  */
 
@@ -543,7 +543,7 @@ union unaligned_16 { uint16_t l; } __attribute__((packed)) av_alias;
 #endif
 
 /*
- * The AV_COPYxxU macros are suitable for copying data to/from unaligned
+ * The AV_COPYxxU macros are suitable for copying LoginData to/from unaligned
  * memory locations.
  */
 

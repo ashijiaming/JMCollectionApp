@@ -80,7 +80,7 @@ void RotateUV90(const uint8* src, int src_stride,
 
 // Rotations for when U and V are interleaved.
 // These functions take one input pointer and
-// split the data into two buffers while
+// split the LoginData into two buffers while
 // rotating them. Deprecated.
 LIBYUV_API
 void RotateUV180(const uint8* src, int src_stride,

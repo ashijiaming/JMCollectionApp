@@ -1,5 +1,5 @@
 /*
- * Video Acceleration API (shared data between FFmpeg and the video player)
+ * Video Acceleration API (shared LoginData between FFmpeg and the video player)
  * HW decode acceleration for MPEG-2, MPEG-4, H.264 and VC-1
  *
  * Copyright (C) 2008-2009 Splitted-Desktop Systems

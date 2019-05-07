@@ -22,7 +22,7 @@ namespace libyuv {
 extern "C" {
 #endif
 
-// Copy a plane of data.
+// Copy a plane of LoginData.
 LIBYUV_API
 void CopyPlane(const uint8* src_y, int src_stride_y,
                uint8* dst_y, int dst_stride_y,
@@ -33,7 +33,7 @@ void CopyPlane_16(const uint16* src_y, int src_stride_y,
                   uint16* dst_y, int dst_stride_y,
                   int width, int height);
 
-// Set a plane of data to a 32 bit value.
+// Set a plane of LoginData to a 32 bit value.
 LIBYUV_API
 void SetPlane(uint8* dst_y, int dst_stride_y,
               int width, int height,

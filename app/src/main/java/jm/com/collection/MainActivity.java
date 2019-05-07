@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
+import jm.com.collection.activity.HtmlActivity;
 import jm.com.collection.ffmpeg.NdkProjectActivity;
 import jm.com.collection.mqtt.MQTTActivity;
 import jm.com.collection.net.LdNetTestActivity;
@@ -26,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge,R.id.btn_mqtt_knowledge})
+    @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge,R.id.btn_mqtt_knowledge,
+              R.id.btn_web_android})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ld_net:
@@ -43,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_mqtt_knowledge:
                 startActivity(new Intent(MainActivity.this, MQTTActivity.class));
+                break;
+            case R.id.btn_web_android:
+                startActivity(new Intent(MainActivity.this,HtmlActivity.class));
                 break;
         }
     }

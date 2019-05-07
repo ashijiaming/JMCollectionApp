@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".BaseApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +49,7 @@
          <activity android:name=".mqtt.MQTTActivity"/>
          <service android:name=".mqtt.MQTTService"/>
          <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <activity android:name=".activity.HtmlActivity"/>
     </application>
 
 </manifest>

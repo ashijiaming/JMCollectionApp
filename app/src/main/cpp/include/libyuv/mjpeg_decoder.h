@@ -44,7 +44,7 @@ enum JpegSubsamplingType {
 };
 
 struct Buffer {
-  const uint8* data;
+  const uint8* LoginData;
   int len;
 };
 
@@ -66,7 +66,7 @@ struct SetJmpErrorMgr;
 class LIBYUV_API MJpegDecoder {
  public:
   typedef void (*CallbackFunction)(void* opaque,
-                                   const uint8* const* data,
+                                   const uint8* const* LoginData,
                                    const int* strides,
                                    int rows);
 
@@ -137,12 +137,12 @@ class LIBYUV_API MJpegDecoder {
   // less, the image is cropped. "planes" must have size equal to at least
   // GetNumComponents() and they must point to non-overlapping buffers of size
   // at least GetComponentSize(i). The pointers in planes are incremented
-  // to point to after the end of the written data.
+  // to point to after the end of the written LoginData.
   // TODO(fbarchard): Add dst_x, dst_y to allow specific rect to be decoded.
   LIBYUV_BOOL DecodeToBuffers(uint8** planes, int dst_width, int dst_height);
 
-  // Decodes the entire image and passes the data via repeated calls to a
-  // callback function. Each call will get the data for a whole number of
+  // Decodes the entire image and passes the LoginData via repeated calls to a
+  // callback function. Each call will get the LoginData for a whole number of
   // image scanlines.
   // TODO(fbarchard): Add dst_x, dst_y to allow specific rect to be decoded.
   LIBYUV_BOOL DecodeToCallback(CallbackFunction fn, void* opaque,
@@ -159,12 +159,12 @@ class LIBYUV_API MJpegDecoder {
   LIBYUV_BOOL StartDecode();
   LIBYUV_BOOL FinishDecode();
 
-  void SetScanlinePointers(uint8** data);
+  void SetScanlinePointers(uint8** LoginData);
   LIBYUV_BOOL DecodeImcuRow();
 
   int GetComponentScanlinePadding(int component);
 
-  // A buffer holding the input data for a frame.
+  // A buffer holding the input LoginData for a frame.
   Buffer buf_;
   BufferVector buf_vec_;
 
