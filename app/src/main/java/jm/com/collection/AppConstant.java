@@ -1,4 +1,6 @@
-package jm.com.collection.net;
+package jm.com.collection;
+
+import android.os.Environment;
 
 /**
  * Created by Administrator on 2017/8/12.
@@ -6,7 +8,7 @@ package jm.com.collection.net;
  * Description : ld全局类
  */
 
-public class LdAppConstant {
+public class AppConstant {
     // 请求WCF Restful帐号
     public static final String RESTUSRNAME = "V0H66DH26V2H68LB";
     // 请求WCF Restful密码
@@ -14,5 +16,7 @@ public class LdAppConstant {
     // 数据加密Key值
     public static final  String ENCRYPTKEY = "4NRB426266F6V6B2";
 
-    public static final String BASE_URL="https://183.237.234.162:8068/";
+    public static final String BASE_URL="http://192.168.1.40:8080/";
+
+    public static final  String imagePath= Environment.getExternalStorageDirectory().getPath() + "/fp.jpg";
 }

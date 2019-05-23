@@ -7,6 +7,7 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jm.com.collection.activity.AIActivity;
 import jm.com.collection.activity.HtmlActivity;
 import jm.com.collection.ffmpeg.NdkProjectActivity;
 import jm.com.collection.mqtt.MQTTActivity;
@@ -20,12 +21,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
     }
 
     @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge,R.id.btn_mqtt_knowledge,
-              R.id.btn_web_android})
+              R.id.btn_web_android,R.id.btn_baidu_ai})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ld_net:
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_web_android:
                 startActivity(new Intent(MainActivity.this,HtmlActivity.class));
+                break;
+            case R.id.btn_baidu_ai:
+                startActivity(new Intent(MainActivity.this, AIActivity.class));
                 break;
         }
     }

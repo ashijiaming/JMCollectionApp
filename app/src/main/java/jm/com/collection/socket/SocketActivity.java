@@ -10,8 +10,8 @@ import android.widget.EditText;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import jm.com.collection.R;
 
@@ -19,7 +19,7 @@ public class SocketActivity extends AppCompatActivity {
 
     private static final String TAG="SocketActivity";
 
-    @InjectView(R.id.et_send_content)
+    @Bind(R.id.et_send_content)
     EditText et_send_content;
 
     ExampleClient client;
@@ -28,7 +28,7 @@ public class SocketActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_socket);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.btn_connection_one,R.id.btn_send_message})

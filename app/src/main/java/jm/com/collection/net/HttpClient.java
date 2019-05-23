@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import jm.com.collection.AppConstant;
 import jm.com.collection.utils.EncryptUtil;
 import okhttp3.Authenticator;
 import okhttp3.MediaType;
@@ -14,7 +15,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Administrator on 2017/8/12.
@@ -24,20 +24,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpClient {
     private static Retrofit retrofit;
-    private static final int DEFAULT_TIMEOUT=5;
+    private static final int DEFAULT_TIMEOUT=10;
     private HttpClient(){}
 
     public static Retrofit getInstance(){
         if (retrofit==null){
             OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
                     .authenticator(Authenticator.NONE)
-                    .addInterceptor(new HttpInterceptor())
+                    //.addInterceptor(new HttpInterceptor())
                     .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
             retrofit=new Retrofit.Builder()
                     .client(okHttpClient.build())
-                    .baseUrl(LdAppConstant.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .baseUrl(AppConstant.BASE_URL)
+                    .addConverterFactory(DecodeConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
         }
@@ -45,7 +45,7 @@ public class HttpClient {
     }
 
     public static RequestBody getRequestBody(Map object){
-        String encrypt = EncryptUtil.Encrypt(GsonUtil.parseJson(object), LdAppConstant.ENCRYPTKEY);
+        String encrypt = EncryptUtil.Encrypt(GsonUtil.parseJson(object), AppConstant.ENCRYPTKEY);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("request",encrypt);

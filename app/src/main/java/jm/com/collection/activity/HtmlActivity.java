@@ -1,6 +1,5 @@
 package jm.com.collection.activity;
 
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +8,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import jm.com.collection.R;
 import jm.com.collection.data.LoginData;
 
@@ -22,7 +21,7 @@ import jm.com.collection.data.LoginData;
  */
 public class HtmlActivity extends AppCompatActivity {
 
-    @InjectView(R.id.wb_content)
+    @Bind(R.id.wb_content)
     WebView webView;
 
     private String url="http://192.168.1.40:8080/JMCollectionWeb/index.html";
@@ -32,7 +31,7 @@ public class HtmlActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_html);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);

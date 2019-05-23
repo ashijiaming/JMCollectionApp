@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.Map;
 
+import jm.com.collection.AppConstant;
 import jm.com.collection.utils.EncryptUtil;
 import rx.functions.Func1;
 
@@ -31,7 +32,7 @@ public class FuncToTable implements Func1<ResponseBean,List<Map>> {
     @Override
     public List<Map> call(ResponseBean responseBean) {
         String string = responseBean.getResponse().toString();
-        String decrypt = EncryptUtil.Decrypt(string, LdAppConstant.ENCRYPTKEY);
+        String decrypt = EncryptUtil.Decrypt(string, AppConstant.ENCRYPTKEY);
         List<Map> mapList = null;
         try {
             JSONObject jsonObject = new JSONObject(decrypt);

@@ -1,6 +1,5 @@
 package jm.com.collection.net;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,9 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
+import jm.com.collection.AppConstant;
 import jm.com.collection.R;
 import jm.com.collection.utils.EncryptUtil;
 import okhttp3.MediaType;
@@ -35,16 +35,16 @@ import rx.schedulers.Schedulers;
 public class LdNetTestActivity extends AppCompatActivity {
 
     private static final String TAG ="LdNetTestActivity";
-    @InjectView(R.id.btn_get_department)
+    @Bind(R.id.btn_get_department)
     Button btnGetDepartment;
-    @InjectView(R.id.tv_show_department)
+    @Bind(R.id.tv_show_department)
     TextView tvShowDepartment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ld_net_test);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.btn_get_department)
@@ -71,7 +71,7 @@ public class LdNetTestActivity extends AppCompatActivity {
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(LdAppConstant.BASE_URL)
+                .baseUrl(AppConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GetDepartmentsApi getDepartmentsApi = retrofit.create(GetDepartmentsApi.class);
@@ -80,7 +80,7 @@ public class LdNetTestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
                 String str = response.body().getResponse();
-                String result= EncryptUtil.Decrypt(str,LdAppConstant.ENCRYPTKEY);
+                String result= EncryptUtil.Decrypt(str, AppConstant.ENCRYPTKEY);
                 tvShowDepartment.setText(result);
             }
 
@@ -105,7 +105,7 @@ public class LdNetTestActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBean> call, Response<ResponseBean> response) {
                 String str = response.body().getResponse();
-                String result=EncryptUtil.Decrypt(str,LdAppConstant.ENCRYPTKEY);
+                String result=EncryptUtil.Decrypt(str, AppConstant.ENCRYPTKEY);
                 tvShowDepartment.setText(result);
             }
             @Override
