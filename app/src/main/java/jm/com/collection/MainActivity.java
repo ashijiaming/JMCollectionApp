@@ -14,6 +14,7 @@ import jm.com.collection.mqtt.MQTTActivity;
 import jm.com.collection.net.LdNetTestActivity;
 import jm.com.collection.socket.SocketActivity;
 import jm.com.collection.view.CustomViewActivity;
+import jm.com.collection.webview.X5WebViewActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick({R.id.btn_ld_net, R.id.btn_custom_view,R.id.btn_ndk_project,R.id.btn_socket_knowledge,R.id.btn_mqtt_knowledge,
-              R.id.btn_web_android,R.id.btn_baidu_ai})
+              R.id.btn_web_android,R.id.btn_baidu_ai,R.id.btn_x5_browser})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ld_net:
@@ -49,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_baidu_ai:
                 startActivity(new Intent(MainActivity.this, AIActivity.class));
+                break;
+            case R.id.btn_x5_browser:
+                startActivity(new Intent(MainActivity.this, X5WebViewActivity.class));
                 break;
         }
     }

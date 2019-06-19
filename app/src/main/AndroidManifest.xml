@@ -55,6 +55,10 @@
          <service android:name="org.eclipse.paho.android.service.MqttService" />
         <activity android:name=".activity.HtmlActivity"/>
         <activity android:name=".activity.AIActivity"/>
+        <activity android:name=".webview.X5WebViewActivity"/>
+        <activity android:name=".webview.BrowserActivity"/>
+        <activity android:name=".webview.FilechooserActivity"/>
+        <activity android:name=".webview.FullScreenActivity"/>
     </application>
 
 </manifest>

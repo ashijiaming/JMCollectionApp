@@ -35,7 +35,7 @@ public final class SurfaceViewCallback implements android.view.SurfaceHolder.Cal
             mCamera.setPreviewCallback(this);
             Log.i(TAG, "开始预览");
             //调用旋转屏幕时自适应
-            //setCameraDisplayOrientation(MainActivity.this, mCurrentCamIndex, mCamera);
+            //setCameraDisplayOrientation(X5WebViewActivity.this, mCurrentCamIndex, mCamera);
         } catch (Exception e) {
         }
     }
