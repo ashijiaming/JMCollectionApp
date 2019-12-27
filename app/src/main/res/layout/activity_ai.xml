@@ -31,6 +31,13 @@
       android:layout_marginLeft="20dp"
       android:text="图片入库"/>
 
+  <Button
+      android:id="@+id/btn_image_general"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/btn_image_capture"
+      android:text="通用图片识别"/>
+
   <TextView
       android:id="@+id/tv_result"
       android:layout_width="wrap_content"

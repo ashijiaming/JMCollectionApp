@@ -59,7 +59,7 @@ public class AIActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.btn_image_capture,R.id.btn_image_add, R.id.btn_image_search})
+    @OnClick({R.id.btn_image_capture,R.id.btn_image_add, R.id.btn_image_search,R.id.btn_image_general})
     void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_image_capture:
@@ -71,8 +71,13 @@ public class AIActivity extends AppCompatActivity {
             case R.id.btn_image_search:
                  searchImage();
                 break;
+            case R.id.btn_image_general:
+                searchGeneral();
+                break;
         }
     }
+
+
 
     @Subscribe
     public void onMessageEvent(final EventLocal eventLocal){
@@ -85,6 +90,49 @@ public class AIActivity extends AppCompatActivity {
         Log.i(TAG,eventLocal.getValue());
     }
 
+    /**
+     * 通用物品识别
+     */
+    public void searchGeneral() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", "jm");
+            jsonObject.put("img", "123");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        File file = new File(AppConstant.imagePath);
+        if (!file.exists()) {
+            Log.i(TAG, "文件不存在");
+            return;
+        }
+        tv_result.setText("识别中...");
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpg"), file);
+        // MultipartBody.Part  和后端约定好Key，这里的partName是用file
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
+        ImageApi imageApi = retrofit.create(ImageApi.class);
+        imageApi.advancedGeneral(body).enqueue(new Callback<ResponseString>() {
+            @Override
+            public void onResponse(Call<ResponseString> call, Response<ResponseString> response) {
+                ResponseString responseResult = response.body();
+                if (responseResult==null){
+                    tv_result.setText("识别失败,结果为空");
+                    return;
+                }
+                Log.i(TAG, "识别请求成功" + responseResult.getMessage());
+                String result = responseResult.getResult();
+                tv_result.setText("识别结果："+result);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseString> call, Throwable t) {
+                Log.i(TAG, "识别请求失败" + t.toString());
+                tv_result.setText("识别失败，请重试");
+            }
+        });
+    }
 
     public void addImage() {
         JSONObject jsonObject = new JSONObject();
@@ -127,7 +175,9 @@ public class AIActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * 图库图片识别
+     */
     public void searchImage() {
         JSONObject jsonObject = new JSONObject();
         try {
@@ -187,5 +237,9 @@ public class AIActivity extends AppCompatActivity {
         @Multipart
         @POST("search")
         Call<ResponseString> searchImage(@Part MultipartBody.Part file);
+
+        @Multipart
+        @POST("advancedGeneral")
+        Call<ResponseString> advancedGeneral(@Part MultipartBody.Part file);
     }
 }

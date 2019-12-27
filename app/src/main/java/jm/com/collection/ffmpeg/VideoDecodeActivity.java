@@ -9,8 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jm.ffmpeg.jni.DecodeVideo;
+
 import jm.com.collection.R;
-import jm.com.collection.ffmpeg.jni.DecodeVideo;
 
 
 public class VideoDecodeActivity extends AppCompatActivity implements View.OnClickListener {

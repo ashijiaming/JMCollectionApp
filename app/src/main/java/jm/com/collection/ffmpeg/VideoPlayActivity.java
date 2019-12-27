@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 
+import com.jm.ffmpeg.jni.ThreadVideo;
+import com.jm.ffmpeg.view.VideoView;
+
 import java.io.File;
 
 import jm.com.collection.R;
-import jm.com.collection.ffmpeg.jni.ThreadVideo;
-import jm.com.collection.ffmpeg.view.VideoView;
 
 public class VideoPlayActivity extends AppCompatActivity {
 

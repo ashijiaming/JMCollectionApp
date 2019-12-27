@@ -1,56 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/btn_ld_net"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LD网络框架测试" />
-    <Button
-        android:id="@+id/btn_custom_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_ld_net"
-        android:text="自定义View"/>
-
-    <Button
-        android:id="@+id/btn_ndk_project"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_custom_view"
-        android:text="FFMEPG学习"/>
-    <Button
-        android:id="@+id/btn_socket_knowledge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_ndk_project"
-        android:text="Socket研究"/>
-    <Button
-        android:id="@+id/btn_mqtt_knowledge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/btn_socket_knowledge"
-        android:text="MQTT研究"/>
-    <Button
-        android:id="@+id/btn_web_android"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_ld_net"
-        android:text="原生与Web交互"/>
-    <Button
-        android:id="@+id/btn_baidu_ai"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_ld_net"
-        android:layout_toRightOf="@id/btn_web_android"
-        android:text="百度AI"/>
-    <Button
-        android:id="@+id/btn_x5_browser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btn_ld_net"
-        android:layout_toRightOf="@id/btn_baidu_ai"
-        android:text="X5内核浏览器"/>
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_main_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        android:orientation="vertical" />
 </RelativeLayout>

@@ -47,6 +47,7 @@
         <activity android:name=".ffmpeg.NdkProjectActivity"/>
         <activity android:name=".ffmpeg.VideoPlayActivity"/>
         <activity android:name=".ffmpeg.VideoDecodeActivity"/>
+        <activity android:name=".ffmpeg.ExecuteCommandActivity"/>
 
         <activity android:name=".socket.SocketActivity"/>
 
@@ -59,6 +60,8 @@
         <activity android:name=".webview.BrowserActivity"/>
         <activity android:name=".webview.FilechooserActivity"/>
         <activity android:name=".webview.FullScreenActivity"/>
+
+        <activity android:name=".activity.JavaWebActivity"/>
     </application>
 
 </manifest>

@@ -39,9 +39,11 @@ public class NdkProjectActivity extends AppCompatActivity {
         final List<Class> activities = new ArrayList<>();
         titles.add("1.视频解码将MP4转换为YUV格式");
         titles.add("2.像素格式转换和native原生绘制");
+        titles.add("3.执行FFmpeg命令");
 
         activities.add(VideoDecodeActivity.class);
         activities.add(VideoPlayActivity.class);
+        activities.add(ExecuteCommandActivity.class);
 
         NdkTitleAdapter adapter = new NdkTitleAdapter(this, R.layout.list_view_item, titles);
         mListView.setAdapter(adapter);
