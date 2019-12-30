@@ -2,6 +2,8 @@ package com.jm.media.command;
 
 import android.content.Context;
 
+import com.jm.media.util.LogInfo;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +43,7 @@ class FileUtils {
 			
 			return true;
 		} catch (IOException e) {
-			Log.e("issue in coping binary from assets to data. ", e);
+			LogInfo.e("issue in coping binary from assets to data. ", e);
 		}
         return false;
 	}
@@ -72,7 +74,7 @@ class FileUtils {
             is = new BufferedInputStream(new FileInputStream(file));
             return SHA1(is);
         } catch (IOException e) {
-            Log.e(e);
+            LogInfo.e(e);
         } finally {
             Util.close(is);
         }
@@ -94,9 +96,9 @@ class FileUtils {
             }
             return formatter.toString();
         } catch (NoSuchAlgorithmException e) {
-            Log.e(e);
+            LogInfo.e(e);
         } catch (IOException e) {
-            Log.e(e);
+            LogInfo.e(e);
         } finally {
             Util.close(is);
         }

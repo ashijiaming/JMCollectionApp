@@ -3,6 +3,7 @@ package com.jm.media.command;
 import android.content.Context;
 
 import com.jm.media.command.exceptions.FFmpegCommandAlreadyRunningException;
+import com.jm.media.util.LogInfo;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,12 +25,12 @@ public class FFmpegPresenter {
                 ffmpeg.loadBinary(new LoadBinaryResponseHandler() {
                     @Override
                     public void onFailure() {
-                        Log.i("Load Failure");
+                        LogInfo.i("Load Failure");
                     }
 
                     @Override
                     public void onSuccess() {
-                        Log.i("Load Success");
+                        LogInfo.i("Load Success");
                     }
                 });
             } catch (Exception e) {
@@ -46,17 +47,17 @@ public class FFmpegPresenter {
                 @Override
                 public void onStart() {
                     super.onStart();
-                    Log.i("onStart : ffmpeg" + command);
+                    LogInfo.i("onStart : ffmpeg" + command);
                 }
 
                 public void onProgress(String s) {
-                    Log.i("progress :" + s);
+                    LogInfo.i("progress :" + s);
                 }
 
                 @Override
                 public void onSuccess(String message) {
                     super.onSuccess(message);
-                    Log.i( "success :" + message);
+                    LogInfo.i( "success :" + message);
                 }
 
                 @Override
@@ -68,10 +69,10 @@ public class FFmpegPresenter {
                 public void onFinish() {
                     list.remove(0);
                     if (list.size()>0){
-                        Log.i("Finished command : ffmpeg " + Arrays.toString(command));
+                        LogInfo.i("Finished command : ffmpeg " + Arrays.toString(command));
                         executeFFmpeg(list,type);
                     }else {
-                        Log.i("All Finished command : ffmpeg " + Arrays.toString(command));
+                        LogInfo.i("All Finished command : ffmpeg " + Arrays.toString(command));
                         ffmpegListener.onAllFinish(type);
                     }
                 }

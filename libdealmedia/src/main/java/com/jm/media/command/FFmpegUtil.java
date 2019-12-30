@@ -103,10 +103,30 @@ public class FFmpegUtil {
     public static String[] mediaMux(String videoFile, String audioFile, String muxFile) {
         deleteTargetFile(muxFile);
         //-t:时长  如果忽略音视频时长，则把"-t %d"去掉
-        String mixAudioCmd = "-i %s -i %s -vcodec copy -acodec copy %s";
+        String mixAudioCmd = "-i %s -i %s -c:v copy -c:a copy %s";
         mixAudioCmd = String.format(mixAudioCmd, videoFile, audioFile, muxFile);
         return mixAudioCmd.split(" ");//以空格分割为字符串数组
     }
+
+
+    /**
+     * 使用ffmpeg命令行进行音视频合成
+     * 不改变编码只是封装
+     * h264与aac合并
+     * @param videoFile 视频文件
+     * @param audioFile 音频文件
+     * @param muxFile   目标文件
+     * @return 合成后的文件
+     */
+    @SuppressLint("DefaultLocale")
+    public static String[] mediaMuxH264(String videoFile, String audioFile, String muxFile) {
+        deleteTargetFile(muxFile);
+        //-t:时长  如果忽略音视频时长，则把"-t %d"去掉
+        String mixAudioCmd = "-i %s -i %s -map 0:0 -map 1:0 %s";
+        mixAudioCmd = String.format(mixAudioCmd, videoFile, audioFile, muxFile);
+        return mixAudioCmd.split(" ");//以空格分割为字符串数组
+    }
+
 
     /**
      * 使用ffmpeg命令行进行音视频合成

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.tencent.smtt.sdk.QbSdk;
@@ -48,6 +49,7 @@ public class BaseApplication extends Application{
         sContext = getApplicationContext();
         sResource = sContext.getResources();
         instance=this;
+        MultiDex.install(this);
 
 
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。

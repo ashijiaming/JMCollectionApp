@@ -1,5 +1,7 @@
 package com.jm.media.command;
 
+import com.jm.media.util.LogInfo;
+
 import java.io.IOException;
 
 class ShellCommand {
@@ -9,7 +11,7 @@ class ShellCommand {
         try {
             process = Runtime.getRuntime().exec(commandString);
         } catch (IOException e) {
-            Log.e("Exception while trying to run: " + commandString, e);
+            LogInfo.e("Exception while trying to run: " + commandString, e);
         }
         return process;
     }
@@ -30,7 +32,7 @@ class ShellCommand {
                 }
             }
         } catch (InterruptedException e) {
-            Log.e("Interrupt exception", e);
+            LogInfo.e("Interrupt exception", e);
         } finally {
             Util.destroyProcess(process);
         }

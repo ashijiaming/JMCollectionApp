@@ -48,6 +48,9 @@
         <activity android:name=".ffmpeg.VideoPlayActivity"/>
         <activity android:name=".ffmpeg.VideoDecodeActivity"/>
         <activity android:name=".ffmpeg.ExecuteCommandActivity"/>
+        <activity android:name=".ffmpeg.RecordVideoActivity"/>
+        <activity android:name="com.jm.media.record.MediaRecorderActivity"/>
+
 
         <activity android:name=".socket.SocketActivity"/>
 

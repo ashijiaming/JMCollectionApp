@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.jm.media.R;
 import com.jm.media.command.exceptions.FFmpegCommandAlreadyRunningException;
 import com.jm.media.command.exceptions.FFmpegNotSupportedException;
+import com.jm.media.util.LogInfo;
 
 import java.lang.reflect.Array;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class FFmpeg implements FFmpegInterface {
 
     private FFmpeg(Context context) {
         this.context = context.getApplicationContext();
-        Log.setDEBUG(Util.isDebug(this.context));
+        LogInfo.setDEBUG(Util.isDebug(this.context));
     }
 
     public static FFmpeg getInstance(Context context) {
@@ -39,11 +40,11 @@ public class FFmpeg implements FFmpegInterface {
         String cpuArchNameFromAssets = null;
         switch (CpuArchHelper.getCpuArch()) {
             case x86:
-                Log.i("Loading FFmpeg for x86 CPU");
+                LogInfo.i("Loading FFmpeg for x86 CPU");
                 cpuArchNameFromAssets = "x86";
                 break;
             case ARMv7:
-                Log.i("Loading FFmpeg for armv7 CPU");
+                LogInfo.i("Loading FFmpeg for armv7 CPU");
                 cpuArchNameFromAssets = "armeabi-v7a";
                 break;
             case NONE:

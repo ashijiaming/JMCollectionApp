@@ -2,10 +2,12 @@ package com.jm.media.command;
 
 import android.os.Build;
 
+import com.jm.media.util.LogInfo;
+
 class CpuArchHelper {
     
     static CpuArch getCpuArch() {
-        Log.d("Build.CPU_ABI : " + Build.CPU_ABI);
+        LogInfo.d("Build.CPU_ABI : " + Build.CPU_ABI);
         return CpuArch.ARMv7;
 
 //        // check if device is x86 or x86_64

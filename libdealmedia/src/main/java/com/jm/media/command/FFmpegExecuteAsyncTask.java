@@ -2,6 +2,8 @@ package com.jm.media.command;
 
 import android.os.AsyncTask;
 
+import com.jm.media.util.LogInfo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -39,14 +41,14 @@ class FFmpegExecuteAsyncTask extends AsyncTask<Void, String, CommandResult> {
             if (process == null) {
                 return CommandResult.getDummyFailureResponse();
             }
-            Log.d("Running publishing updates method");
+            LogInfo.d("Running publishing updates method");
             checkAndUpdateProcess();
             return CommandResult.getOutputFromProcess(process);
         } catch (TimeoutException e) {
-            Log.e("FFmpeg timed out", e);
+            LogInfo.e("FFmpeg timed out", e);
             return new CommandResult(false, e.getMessage());
         } catch (Exception e) {
-            Log.e("Error running FFmpeg", e);
+            LogInfo.e("Error running FFmpeg", e);
         } finally {
             Util.destroyProcess(process);
         }

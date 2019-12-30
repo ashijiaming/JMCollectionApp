@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.AsyncTask;
 
+
+import com.jm.media.util.LogInfo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +50,7 @@ class Util {
             }
             return sb.toString();
         } catch (IOException e) {
-            Log.e("error converting input stream to string", e);
+            LogInfo.e("error converting input stream to string");
         }
         return null;
     }

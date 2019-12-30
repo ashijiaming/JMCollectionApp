@@ -3,6 +3,8 @@ package com.jm.media.command;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.jm.media.util.LogInfo;
+
 import java.io.File;
 
 class FFmpegLoadLibraryAsyncTask extends AsyncTask<Void, Void, Boolean> {
@@ -31,12 +33,12 @@ class FFmpegLoadLibraryAsyncTask extends AsyncTask<Void, Void, Boolean> {
             // make file executable
             if (isFileCopied) {
                 if(!ffmpegFile.canExecute()) {
-                    Log.d("FFmpeg is not executable, trying to make it executable ...");
+                    LogInfo.d("FFmpeg is not executable, trying to make it executable ...");
                     if (ffmpegFile.setExecutable(true)) {
                         return true;
                     }
                 } else {
-                    Log.d("FFmpeg is executable");
+                    LogInfo.d("FFmpeg is executable");
                     return true;
                 }
             }
