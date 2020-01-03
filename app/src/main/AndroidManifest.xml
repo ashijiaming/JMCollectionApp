@@ -11,6 +11,8 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- 允许录音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
@@ -44,12 +46,14 @@
         <activity android:name=".view.WaveActivity"/>
 
 
-        <activity android:name=".ffmpeg.NdkProjectActivity"/>
+        <activity android:name=".ffmpeg.NdkProjectActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ffmpeg.VideoPlayActivity"/>
         <activity android:name=".ffmpeg.VideoDecodeActivity"/>
         <activity android:name=".ffmpeg.ExecuteCommandActivity"/>
         <activity android:name=".ffmpeg.RecordVideoActivity"/>
-        <activity android:name="com.jm.media.record.MediaRecorderActivity"/>
+        <activity android:name="com.jm.media.record.MediaRecorderActivity"
+            android:screenOrientation="portrait" />
 
 
         <activity android:name=".socket.SocketActivity"/>

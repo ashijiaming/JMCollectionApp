@@ -1,12 +1,11 @@
 package com.jm.media.util;
 
-import com.jm.media.command.FFmpeg;
 
 @SuppressWarnings("unused")
 public class LogInfo {
 
-    private static String TAG = FFmpeg.class.getSimpleName();
-    private static boolean DEBUG = false;
+    private static String TAG = LogInfo.class.getSimpleName();
+    private static boolean DEBUG = true;
 
     public static void setDEBUG(boolean DEBUG) {
         LogInfo.DEBUG = DEBUG;

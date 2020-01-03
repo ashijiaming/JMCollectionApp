@@ -1,13 +1,18 @@
 package jm.com.collection;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.tbruyelle.rxpermissions.RxPermissions;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         List<String> list=new ArrayList<>();
-
+        requestMustPermission(this);
         list.add("LD网络框架测试");
         list.add("自定义View");
         list.add("FFMEPG学习");
@@ -65,6 +70,25 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, classList.get(position)));
             }
         });
+    }
+
+    /**
+     * 必须权限授予首页
+     */
+    private void requestMustPermission(Context context) {
+        AtomicInteger count = new AtomicInteger();
+        AtomicBoolean granted = new AtomicBoolean(true);
+        String[] manifestPermissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.RECORD_AUDIO",
+                "android.permission.CAMERA", "android.permission.READ_PHONE_STATE"};
+        RxPermissions.getInstance(context)
+                .requestEach(manifestPermissions)
+                .subscribe(permission -> {
+                    count.getAndIncrement();
+                    if (permission.granted) {
+                    } else {
+                        granted.set(false);
+                    }
+                });
     }
 
     @Override

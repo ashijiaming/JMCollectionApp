@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
@@ -47,6 +51,8 @@ dependencies {
     implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
     implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
     implementation files('src/main/jniLibs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+    //权限申请工具类
+    implementation 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     implementation project(':libffmpeg')
     implementation project(':libdealmedia')
 }

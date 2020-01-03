@@ -1,14 +1,17 @@
 package com.jm.media.record;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
+import android.view.OrientationEventListener;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -141,6 +144,30 @@ public class MediaRecorderActivity extends Activity implements
     private boolean startState;
     private boolean NEED_FULL_SCREEN = false;
     private RelativeLayout title_layout;
+    private OrientationEventListener orientationEventListener;
+    private int rotate,currentVideoRotate;
+    private boolean isNotFirst=false;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case HANDLE_INVALIDATE_PROGRESS:
+                    if (mMediaRecorder != null && !isFinishing()) {
+                        if (mMediaObject != null && mMediaObject.getMedaParts() != null && mMediaObject.getDuration() >= RECORD_TIME_MAX) {
+                            mTitleNext.performClick();
+                            return;
+                        }
+                        if (mProgressView != null)
+                            mProgressView.invalidate();
+                        if (mPressedStatus)
+                            sendEmptyMessageDelayed(0, 30);
+                    }
+                    break;
+            }
+        }
+    };
 
     /**
      * @param context
@@ -156,6 +183,26 @@ public class MediaRecorderActivity extends Activity implements
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 防止锁屏
         initData();
         loadViews();
+        orientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+
+            @Override
+            public void onOrientationChanged(int orientation) {
+                if (orientation==-1)return;
+                if (orientation>45&&orientation<=135)
+                    rotate=90;
+                if (orientation>135&&orientation<=225)
+                    rotate=180;
+                if (orientation>225&&orientation<=315)
+                    rotate=270;
+                if (orientation>315||orientation<=45)
+                    rotate=0;
+            }
+        };
+        if (orientationEventListener.canDetectOrientation()){
+            orientationEventListener.enable();
+        }else {
+            orientationEventListener.disable();
+        }
     }
 
     private void initData() {
@@ -305,7 +352,6 @@ public class MediaRecorderActivity extends Activity implements
                     break;
 
                 case MotionEvent.ACTION_UP:
-
                     mMediaRecorder.setRecordState(false);
                     if (mMediaObject.getDuration() >= RECORD_TIME_MAX) {
                         mTitleNext.performClick();
@@ -313,16 +359,6 @@ public class MediaRecorderActivity extends Activity implements
                         mMediaRecorder.setStopDate();
                         setStopUI();
                     }
-
-
-                    // 暂停
-/*                    if (mPressedStatus) {
-
-                        // 检测是否已经完成
-                        if (mMediaObject.getDuration() >= RECORD_TIME_MAX) {
-                            mTitleNext.performClick();
-                        }
-                    }*/
                     break;
             }
             return true;
@@ -356,7 +392,10 @@ public class MediaRecorderActivity extends Activity implements
 
             mProgressView.setData(mMediaObject);
         }
-
+        if (!isNotFirst){
+            currentVideoRotate=rotate;
+            isNotFirst=true;
+        }
         setStartUI();
     }
 
@@ -374,18 +413,12 @@ public class MediaRecorderActivity extends Activity implements
             mHandler.sendEmptyMessageDelayed(HANDLE_STOP_RECORD,
                     RECORD_TIME_MAX - mMediaObject.getDuration());
         }
-//        mRecordDelete.setVisibility(View.GONE);
         mCameraSwitch.setEnabled(false);
         mRecordLed.setEnabled(false);
     }
 
     @Override
     public void onBackPressed() {
-        /*if (mRecordDelete != null && mRecordDelete.isChecked()) {
-            cancelDelete();
-            return;
-        }*/
-
         if (mMediaObject != null && mMediaObject.getDuration() > 1) {
             // 未转码
             new AlertDialog.Builder(this)
@@ -394,7 +427,6 @@ public class MediaRecorderActivity extends Activity implements
                     .setNegativeButton(
                             R.string.record_camera_cancel_dialog_yes,
                             new DialogInterface.OnClickListener() {
-
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
@@ -426,12 +458,8 @@ public class MediaRecorderActivity extends Activity implements
     private void setStopUI() {
         mPressedStatus = false;
         mRecordController.animate().scaleX(1).scaleY(1).setDuration(500).start();
-
-
-//        mRecordDelete.setVisibility(View.VISIBLE);
         mCameraSwitch.setEnabled(true);
         mRecordLed.setEnabled(true);
-
         mHandler.removeMessages(HANDLE_STOP_RECORD);
         checkStatus();
     }
@@ -450,7 +478,6 @@ public class MediaRecorderActivity extends Activity implements
                 if (part != null) {
                     if (part.remove) {
                         part.remove = false;
-//                        mRecordDelete.setChecked(false);
                         if (mProgressView != null)
                             mProgressView.invalidate();
                     }
@@ -490,9 +517,6 @@ public class MediaRecorderActivity extends Activity implements
             }
         } else if (id == R.id.title_next) {// 停止录制
             stopRecord();
-            /*finish();
-            overridePendingTransition(R.anim.push_bottom_in,
-					R.anim.push_bottom_out);*/
         } else if (id == R.id.record_delete) {
             // 取消回删
             if (mMediaObject != null) {
@@ -525,11 +549,8 @@ public class MediaRecorderActivity extends Activity implements
             MediaObject.MediaPart part = mMediaObject.getCurrentPart();
             if (part != null && part.remove) {
                 part.remove = false;
-//                mRecordDelete.setChecked(false);
-
                 if (mProgressView != null)
                     mProgressView.invalidate();
-
                 return true;
             }
         }
@@ -539,14 +560,14 @@ public class MediaRecorderActivity extends Activity implements
     /**
      * 检查录制时间，显示/隐藏下一步按钮
      */
-    private int checkStatus() {
+    private void checkStatus() {
+        mTitleNext.setVisibility(View.VISIBLE);
         int duration = 0;
         if (!isFinishing() && mMediaObject != null) {
             duration = mMediaObject.getDuration();
             if (duration < RECORD_TIME_MIN) {
                 if (duration == 0) {
                     mCameraSwitch.setVisibility(View.VISIBLE);
-//                    mRecordDelete.setVisibility(View.GONE);
                 } else {
                     mCameraSwitch.setVisibility(View.GONE);
                 }
@@ -560,31 +581,9 @@ public class MediaRecorderActivity extends Activity implements
                 }
             }
         }
-        return 0;
     }
 
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case HANDLE_INVALIDATE_PROGRESS:
-                    if (mMediaRecorder != null && !isFinishing()) {
-                        if (mMediaObject != null && mMediaObject.getMedaParts() != null && mMediaObject.getDuration() >= RECORD_TIME_MAX) {
-                            mTitleNext.performClick();
-                            return;
-                        }
-                        if (mProgressView != null)
-                            mProgressView.invalidate();
-                        // if (mPressedStatus)
-                        // titleText.setText(String.format("%.1f",
-                        // mMediaRecorder.getDuration() / 1000F));
-                        if (mPressedStatus)
-                            sendEmptyMessageDelayed(0, 30);
-                    }
-                    break;
-            }
-        }
-    };
+
 
     @Override
     public void onEncodeStart() {
@@ -603,12 +602,13 @@ public class MediaRecorderActivity extends Activity implements
         hideProgress();
         Intent intent = null;
         try {
-            String outputTempTranscodingVideoPath = mMediaObject.getOutputTempTranscodingVideoPath();
+            String outputVideoPath = mMediaObject.getOutputVideoPath();
             String outputDirectory = mMediaObject.getOutputDirectory();
             String outputTempVideoPath = mMediaObject.getOutputTempVideoPath();
             String baseName = mMediaObject.getBaseName();
             String video = mMediaObject.getOutputDirectory() + File.separator + baseName + ".h264";
             String audio = mMediaObject.getOutputDirectory() + File.separator + baseName + ".aac";
+            String outputAudio = mMediaObject.getOutputDirectory() + File.separator + baseName + ".mp3";
             FFmpegPresenter fFmpegPresenter = new FFmpegPresenter(this);
             fFmpegPresenter.setFFmpegListener(new FFmpegPresenter.FFmpegListener() {
                 @Override
@@ -617,8 +617,14 @@ public class MediaRecorderActivity extends Activity implements
                 }
             });
             List<String[]> cmds = new ArrayList<>();
-            String[] strings = FFmpegUtil.mediaMuxH264(video, audio, outputTempVideoPath);
-            cmds.add(strings);
+            //String[] strings = FFmpegUtil.mediaMuxH264(video, audio, outputTempVideoPath);
+
+            String[] cmd1 = FFmpegUtil.transformAudio(audio, outputAudio);
+            String[] cmd2 = FFmpegUtil.mediaMux(video, outputAudio, outputTempVideoPath);
+            String[] cmd3=FFmpegUtil.rotateVideo(outputTempVideoPath,currentVideoRotate,outputVideoPath);
+            LogInfo.i("currentVideoRotate："+currentVideoRotate);
+            cmds.add(cmd1);
+            cmds.add(cmd2);
             fFmpegPresenter.executeFFmpeg(cmds,0);
 
             intent = new Intent(this, Class.forName(getIntent().getStringExtra(OVER_ACTIVITY_NAME)));
@@ -700,6 +706,7 @@ public class MediaRecorderActivity extends Activity implements
     protected void onDestroy() {
         super.onDestroy();
         mMediaRecorder.release();
+        orientationEventListener.disable();
     }
 
     @Override

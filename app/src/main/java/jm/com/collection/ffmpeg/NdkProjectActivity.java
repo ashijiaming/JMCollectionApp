@@ -1,5 +1,6 @@
 package jm.com.collection.ffmpeg;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,12 +8,15 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.jm.media.util.LogInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +53,27 @@ public class NdkProjectActivity extends AppCompatActivity {
 
         NdkTitleAdapter adapter = new NdkTitleAdapter(this, R.layout.list_view_item, titles);
         mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(NdkProjectActivity.this, activities.get(position)));
-            }
-        });
+        mListView.setOnItemClickListener((parent, view, position, id) -> startActivity(new Intent(NdkProjectActivity.this, activities.get(position))));
+    }
+
+
+    public static int getDisplayRotation(Activity activity) {
+        if(activity == null)
+            return 0;
+
+        int rotation = activity.getWindowManager().getDefaultDisplay()
+                .getRotation();
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                return 0;
+            case Surface.ROTATION_90:
+                return 90;
+            case Surface.ROTATION_180:
+                return 180;
+            case Surface.ROTATION_270:
+                return 270;
+        }
+        return 0;
     }
 
 

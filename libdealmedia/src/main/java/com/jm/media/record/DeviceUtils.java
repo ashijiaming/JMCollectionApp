@@ -1,12 +1,15 @@
 package com.jm.media.record;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.FeatureInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.hardware.Camera;
 import android.os.Build;
 import android.util.TypedValue;
 import android.view.Display;
+import android.view.Surface;
 import android.view.WindowManager;
 
 import com.jm.media.util.StringUtils;
@@ -218,5 +221,45 @@ public class DeviceUtils {
     public static int getScreenHeight(Context context) {
         Display display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         return display.getHeight();
+    }
+
+
+    public static int determineDisplayOrientation(Activity activity, int defaultCameraId) {
+        int displayOrientation = 0;
+        if(Build.VERSION.SDK_INT >  Build.VERSION_CODES.FROYO)
+        {
+            Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+            Camera.getCameraInfo(defaultCameraId, cameraInfo);
+
+            int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
+            int degrees  = 0;
+            switch (rotation) {
+                case Surface.ROTATION_0:
+                    degrees = 0;
+                    break;
+
+                case Surface.ROTATION_90:
+                    degrees = 90;
+                    break;
+
+                case Surface.ROTATION_180:
+                    degrees = 180;
+                    break;
+
+                case Surface.ROTATION_270:
+                    degrees = 270;
+                    break;
+                default:
+                    break;
+            }
+
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                displayOrientation = (cameraInfo.orientation + degrees) % 360;
+                displayOrientation = (360 - displayOrientation) % 360;
+            } else {
+                displayOrientation = (cameraInfo.orientation - degrees + 360) % 360;
+            }
+        }
+        return displayOrientation;
     }
 }

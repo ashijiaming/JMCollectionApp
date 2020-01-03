@@ -18,6 +18,7 @@ import android.view.SurfaceHolder.Callback;
 import com.jm.media.model.BaseMediaBitrateConfig;
 import com.jm.media.model.MediaObject;
 import com.jm.media.util.FileUtils;
+import com.jm.media.util.LogInfo;
 import com.jm.media.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
@@ -609,6 +610,10 @@ public abstract class MediaRecorderBase implements Callback, PreviewCallback, IM
                 camera = Camera.open();
             else
                 camera = Camera.open(mCameraId);
+
+            Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+            Camera.getCameraInfo(mCameraId, cameraInfo);
+            LogInfo.i("CameraInfo"+cameraInfo.orientation);
             camera.setDisplayOrientation(90);
             try {
                 camera.setPreviewDisplay(mSurfaceHolder);

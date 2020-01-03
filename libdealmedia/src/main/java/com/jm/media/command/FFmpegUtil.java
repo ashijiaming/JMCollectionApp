@@ -127,6 +127,15 @@ public class FFmpegUtil {
         return mixAudioCmd.split(" ");//以空格分割为字符串数组
     }
 
+    @SuppressLint("DefaultLocale")
+    public static String[] rotateVideo(String videoFile, int  rotate, String output) {
+        deleteTargetFile(output);
+        //-t:时长  如果忽略音视频时长，则把"-t %d"去掉
+        String mixAudioCmd = "-i %s -c copy -metadata:s:v:0 rotate=%d %s";
+        mixAudioCmd = String.format(mixAudioCmd, videoFile,rotate, output);
+        return mixAudioCmd.split(" ");//以空格分割为字符串数组
+    }
+
 
     /**
      * 使用ffmpeg命令行进行音视频合成
